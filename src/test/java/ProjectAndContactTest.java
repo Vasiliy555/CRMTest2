@@ -10,7 +10,7 @@ import java.util.Random;
 public class ProjectAndContactTest extends WebDriverSettings{
 
     @Test
-    public void testProject() {
+    void testProject() {
         driver.get("https://crm.geekbrains.space/user/login");
         driver.findElement(By.name("_username")).sendKeys("Applanatest1");
         driver.findElement(By.name("_password")).sendKeys("Student2020!");
@@ -57,7 +57,7 @@ public class ProjectAndContactTest extends WebDriverSettings{
         driver.findElement(By.xpath("//button[contains(text(),\'Сохранить и закрыть\')]")).click();
     }
     @Test
-    public void testContact() {
+    void testContact() {
         WebElement element = driver.findElement(By.linkText("Контрагенты"));
         Actions builder = new Actions(driver);
         builder.moveToElement(element).perform();
