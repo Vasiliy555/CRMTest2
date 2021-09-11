@@ -6,15 +6,15 @@ import java.util.Random;
 
 public class DiaryTest extends WebDriverSettings {
 
-@BeforeEach
-void setUrl(){
-    driver.get("https://diary.ru/");
-}
+    @BeforeEach
+    void setUrl() {
+        driver.get("https://diary.ru/");
+        driver.findElement(By.linkText("Регистрация")).click();
+    }
 
     @Test
     void DiaryNewRegistrationTest() {
 
-        driver.findElement(By.linkText("Регистрация")).click();
         Assertions.assertTrue(driver.getCurrentUrl().contains("registration"));
 
         Random random = new Random();
@@ -34,7 +34,6 @@ void setUrl(){
     @Test
     void DiaryEmptyRegistration() {
 
-        driver.findElement(By.linkText("Регистрация")).click();
         Assertions.assertTrue(driver.getCurrentUrl().contains("registration"));
         driver.findElement(By.id("signup_btn")).click();
 
@@ -47,7 +46,27 @@ void setUrl(){
         WebElement emailNameParent = emailName.findElement(By.xpath(".."));
         Assertions.assertEquals(emailNameParent.findElement(By.cssSelector("p")).getText(),
                 "Необходимо заполнить «E-mail».");
+    }
 
+    @Test
+    void incorrectUserName() {
+        driver.findElement(By.id("signupform-username")).sendKeys("QweЛоЛ");
+        driver.findElement(By.id("signupform-email")).sendKeys(("asd@gmail.com"));
+        driver.findElement(By.id("signup_btn")).click();
+        WebElement userName = driver.findElement(By.id("signupform-username"));
+        WebElement userNameParent = userName.findElement(By.xpath(".."));
+        Assertions.assertEquals(userNameParent.findElement(By.cssSelector("p")).getText(),
+                "Использование одновременно русских и латинских символов недопустимо");
+    }
 
+    @Test
+    void incorrectEmail() {
+        driver.findElement(By.id("signupform-username")).sendKeys("Qwetyunonl");
+        driver.findElement(By.id("signupform-email")).sendKeys(("asd@gmail"));
+        driver.findElement(By.id("signup_btn")).click();
+        WebElement emailName = driver.findElement(By.id("signupform-email"));
+        WebElement emailNameParent = emailName.findElement(By.xpath(".."));
+        Assertions.assertEquals(emailNameParent.findElement(By.cssSelector("p")).getText(),
+                "Значение «E-mail» не является правильным email адресом.");
     }
 }
