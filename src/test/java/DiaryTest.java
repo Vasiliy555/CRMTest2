@@ -13,7 +13,7 @@ public class DiaryTest extends WebDriverSettings {
     }
 
     @Test
-    void DiaryNewRegistrationTest() {
+    void diaryNewRegistrationTest() {
 
         Assertions.assertTrue(driver.getCurrentUrl().contains("registration"));
 
@@ -32,9 +32,8 @@ public class DiaryTest extends WebDriverSettings {
     }
 
     @Test
-    void DiaryEmptyRegistration() {
+    void diaryEmptyRegistration() {
 
-        Assertions.assertTrue(driver.getCurrentUrl().contains("registration"));
         driver.findElement(By.id("signup_btn")).click();
 
         WebElement userName = driver.findElement(By.id("signupform-username"));
